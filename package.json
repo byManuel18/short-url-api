@@ -7,10 +7,11 @@
   "license": "UNLICENSED",
   "scripts": {
     "set-env": "node scripts/set-env.js",
+    "start-db": "docker-compose up -d",
     "build:dev": "npm run set-env -- --dev && nest build",
     "build:prod": "npm run set-env -- --prod && nest build",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
-    "start:dev": "npm run set-env -- --dev && nest start --watch",
+    "start:dev": "npm run set-env -- --dev && npm run start-db && nest start --watch",
     "start:prod": "npm run set-env -- --prod && nest start --watch",
     "start:debug": "npm run set-env -- --dev && nest start --debug --watch",
     "lint": "eslint \"{src,apps,libs,test}/**/*.ts\" --fix",
