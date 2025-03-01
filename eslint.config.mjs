@@ -30,7 +30,10 @@ export default tseslint.config(
       'prettier/prettier': 'error', // Muestra errores cuando el código no sigue las reglas de Prettier
       'no-console': 'warn', // Muestra advertencias si hay console.log
       'no-unused-vars': 'off', // Desactiva esta regla para que no haya conflictos con TypeScript
-      '@typescript-eslint/no-unused-vars': ['warn', { argsIgnorePattern: '^_' }], // Ignora variables que comienzan con "_"
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        { argsIgnorePattern: '^_' },
+      ], // Ignora variables que comienzan con "_"
       '@typescript-eslint/explicit-function-return-type': 'off', // No obliga a definir el tipo de retorno
       '@typescript-eslint/no-explicit-any': 'warn', // Muestra advertencias si se usa `any`
     },
