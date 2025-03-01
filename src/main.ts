@@ -1,13 +1,16 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
 import { ConfigService } from '@nestjs/config';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+
+import { AppModule } from './app.module';
+
+import { Environments, EnvKeys } from './config';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
   const configService = app.get(ConfigService);
-  const env = configService.get<string>('environment');
-  if (env === 'dev') {
+  const env = configService.get<string>(EnvKeys.ENV);
+  if (env === Environments.DEV) {
     const config = new DocumentBuilder()
       .setTitle('API Docs')
       .setDescription('Documentación de la API')
@@ -16,6 +19,6 @@ async function bootstrap() {
     const document = SwaggerModule.createDocument(app, config);
     SwaggerModule.setup('api/docs', app, document);
   }
-  await app.listen(configService.get<number>('port') ?? 3000);
+  await app.listen(configService.get<number>(EnvKeys.PORT) ?? 3000);
 }
 void bootstrap();

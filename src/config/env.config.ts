@@ -1,10 +1,12 @@
+import { EnvKeys, Environments } from './interfaces';
+
 export const EnvConfiguration = () => ({
-  environment: process.env.ENV || 'dev',
-  port: process.env.PORT || 3000,
-  db_name: process.env.DB_NAME,
-  db_password: process.env.DB_PASSWORD,
-  db_username: process.env.DB_USERNAME,
-  db_host: process.env.DB_HOST,
-  db_port: process.env.DB_PORT,
-  jwt_secret: process.env.JWT_SECRET,
+  [EnvKeys.ENV]: process.env.ENV || Environments.DEV,
+  [EnvKeys.PORT]: process.env.PORT || 3000,
+  [EnvKeys.DB_NAME]: process.env.DB_NAME,
+  [EnvKeys.DB_PASSWORD]: process.env.DB_PASSWORD,
+  [EnvKeys.DB_USERNAME]: process.env.DB_USERNAME,
+  [EnvKeys.DB_HOST]: process.env.DB_HOST,
+  [EnvKeys.DB_PORT]: process.env.DB_PORT,
+  [EnvKeys.JWT_SECRET]: process.env.JWT_SECRET,
 });
