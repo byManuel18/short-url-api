@@ -32,7 +32,15 @@ export default tseslint.config(
       'no-unused-vars': 'off', // Desactiva esta regla para que no haya conflictos con TypeScript
       '@typescript-eslint/no-unused-vars': [
         'warn',
-        { argsIgnorePattern: '^_' },
+        {
+          args: 'all',
+          argsIgnorePattern: '^_',
+          caughtErrors: 'all',
+          caughtErrorsIgnorePattern: '^_',
+          destructuredArrayIgnorePattern: '^_',
+          varsIgnorePattern: '^_',
+          ignoreRestSiblings: true,
+        },
       ], // Ignora variables que comienzan con "_"
       '@typescript-eslint/explicit-function-return-type': 'off', // No obliga a definir el tipo de retorno
       '@typescript-eslint/no-explicit-any': 'warn', // Muestra advertencias si se usa `any`
