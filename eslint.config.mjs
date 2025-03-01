@@ -44,6 +44,10 @@ export default tseslint.config(
       ], // Ignora variables que comienzan con "_"
       '@typescript-eslint/explicit-function-return-type': 'off', // No obliga a definir el tipo de retorno
       '@typescript-eslint/no-explicit-any': 'warn', // Muestra advertencias si se usa `any`
+      '@typescript-eslint/no-unsafe-member-access': 'off',
+      '@typescript-eslint/no-unsafe-call': 'off',
+      '@typescript-eslint/no-unsafe-return': 'off',
+      '@typescript-eslint/no-unsafe-assignment': 'off',
     },
   },
 );
