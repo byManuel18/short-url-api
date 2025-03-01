@@ -12,8 +12,13 @@ export class RsaService {
   private privateKey: NodeRSA;
 
   constructor() {
-    const privateKeyPem: string = fs.readFileSync(PATH_PRIVATE_KEY, 'utf8');
-    this.privateKey = new NodeRSA(privateKeyPem);
+    try {
+      const privateKeyPem: string = fs.readFileSync(PATH_PRIVATE_KEY, 'utf8');
+
+      this.privateKey = new NodeRSA(privateKeyPem);
+    } catch (_) {
+      /* empty */
+    }
   }
 
   decryptPassword(encryptedPassword: string): string {
