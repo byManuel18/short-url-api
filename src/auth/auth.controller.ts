@@ -2,22 +2,30 @@ import {
   Controller,
   Get,
   Post,
-  Body,
   Patch,
   Param,
   Delete,
+  Body,
+  UsePipes,
+  ValidationPipe,
 } from '@nestjs/common';
 import { AuthService } from './services/auth.service';
-import { CreateAuthDto } from './dto/create-auth.dto';
-import { UpdateAuthDto } from './dto/update-auth.dto';
+
+import { DecryptPasswordPipe } from './pipes/decryptPasswordPipe.pipe';
+
+import { CreateUserDTO } from './dto';
 
 @Controller('auth')
 export class AuthController {
   constructor(private readonly authService: AuthService) {}
 
-  @Post()
-  create(@Body() createAuthDto: CreateAuthDto) {
-    return this.authService.create(createAuthDto);
+  @Post('signUp')
+  @UsePipes(
+    DecryptPasswordPipe,
+    new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }),
+  )
+  create(@Body() createUserDto: CreateUserDTO) {
+    return this.authService.create(createUserDto);
   }
 
   @Get()
@@ -31,8 +39,8 @@ export class AuthController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateAuthDto: UpdateAuthDto) {
-    return this.authService.update(+id, updateAuthDto);
+  update(@Param('id') id: string) {
+    return this.authService.update(+id);
   }
 
   @Delete(':id')

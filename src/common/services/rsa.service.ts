@@ -5,7 +5,9 @@ import path from 'path';
 
 import NodeRSA from 'node-rsa';
 
-const PATH_PRIVATE_KEY = path.join(__dirname, '..', 'keys/private.pem');
+const ROOT_PATH = path.resolve(process.cwd());
+const PATH_PRIVATE_KEY = path.join(ROOT_PATH, 'src/keys/private.pem');
+const _PATH_PUBLIC_KEY = path.join(ROOT_PATH, 'src/keys/public.pem');
 
 @Injectable()
 export class RsaService {
@@ -14,6 +16,9 @@ export class RsaService {
   constructor() {
     try {
       const privateKeyPem: string = fs.readFileSync(PATH_PRIVATE_KEY, 'utf8');
+      // const publicString: string = fs.readFileSync(PATH_PUBLIC_KEY, 'utf8');
+      // const pubicKey = new NodeRSA(publicString);
+      // console.log(pubicKey.encrypt('123456Amgt', 'base64'));
 
       this.privateKey = new NodeRSA(privateKeyPem);
     } catch (_) {
@@ -23,7 +28,11 @@ export class RsaService {
 
   decryptPassword(encryptedPassword: string): string {
     try {
-      return this.privateKey.decrypt(encryptedPassword, 'utf8');
+      const decryptPassword = this.privateKey.decrypt(
+        encryptedPassword,
+        'utf8',
+      );
+      return decryptPassword;
     } catch (_) {
       return '';
     }
