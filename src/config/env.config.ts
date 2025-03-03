@@ -9,4 +9,5 @@ export const EnvConfiguration = () => ({
   [EnvKeys.DB_HOST]: process.env.DB_HOST,
   [EnvKeys.DB_PORT]: process.env.DB_PORT,
   [EnvKeys.JWT_SECRET]: process.env.JWT_SECRET,
+  [EnvKeys.JWT_EXPIRES]: process.env.JWT_EXPIRES,
 });

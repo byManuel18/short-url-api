@@ -7,6 +7,7 @@ export enum EnvKeys {
   DB_HOST = 'db_host',
   DB_PORT = 'db_port',
   JWT_SECRET = 'jwt_secret',
+  JWT_EXPIRES = 'jwt_expires',
 }
 
 export enum Environments {

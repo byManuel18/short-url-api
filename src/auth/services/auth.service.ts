@@ -1,14 +1,17 @@
 import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
+import { JwtService } from '@nestjs/jwt';
 
 import { User } from '../entities/user.entity';
 
 import { CreateUserDTO } from '../dto';
+import { JwtPayload } from '../interfaces/jwt-payload.interface';
 @Injectable()
 export class AuthService {
   constructor(
     @InjectRepository(User) private readonly userRepositiry: Repository<User>,
+    private readonly jwtService: JwtService,
   ) {}
 
   async create(createUserDto: CreateUserDTO) {
@@ -21,7 +24,8 @@ export class AuthService {
       const { password, ...restUser } = user;
 
       return {
-        restUser,
+        ...restUser,
+        token: this.getJwtToken({ id: restUser.id }),
       };
     } catch (error) {
       throw new Error(error.detail as string);
@@ -42,5 +46,10 @@ export class AuthService {
 
   remove(id: number) {
     return `This action removes a #${id} auth`;
+  }
+
+  private getJwtToken(payload: JwtPayload) {
+    const token = this.jwtService.sign(payload);
+    return token;
   }
 }

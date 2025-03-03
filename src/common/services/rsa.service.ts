@@ -20,7 +20,7 @@ export class RsaService {
       const publicKeyPem: string = fs.readFileSync(PATH_PUBLIC_KEY, 'utf8');
 
       this.privateKey = new NodeRSA(privateKeyPem);
-      this.publicKey = new NodeRSA(publicKeyPem, 'public');
+      this.publicKey = new NodeRSA(publicKeyPem);
     } catch (_) {
       /* empty */
     }
@@ -40,7 +40,7 @@ export class RsaService {
 
   encryptPassword(data: string): string {
     try {
-      const encryptPassword = this.publicKey.encrypt(data, 'utf8');
+      const encryptPassword = this.publicKey.encrypt(data, 'base64');
       return encryptPassword;
     } catch (_) {
       return '';
