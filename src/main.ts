@@ -6,6 +6,7 @@ import { AppModule } from './app.module';
 
 import { Environments, EnvKeys } from './config';
 import cookieParser from 'cookie-parser';
+import { CookieInterceptor } from './global/interceptors/cookie.interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -13,6 +14,9 @@ async function bootstrap() {
   app.use(cookieParser());
 
   const configService = app.get(ConfigService);
+
+  app.useGlobalInterceptors(new CookieInterceptor(configService));
+
   const env = configService.get<string>(EnvKeys.ENV);
 
   if (env === Environments.DEV) {

@@ -1,4 +1,3 @@
-import { Response } from 'express';
 import {
   Controller,
   Get,
@@ -9,13 +8,11 @@ import {
   Body,
   UsePipes,
   ValidationPipe,
-  Res,
 } from '@nestjs/common';
 import { AuthService } from './services/auth.service';
 
 import { DecryptPasswordPipe } from './pipes/decryptPasswordPipe.pipe';
 
-import { COOKIE_ACCESS } from './strategies/jwt.strategy';
 import { CreateUserDTO } from './dto';
 
 @Controller('auth')
@@ -27,17 +24,8 @@ export class AuthController {
     DecryptPasswordPipe,
     new ValidationPipe({ whitelist: true, forbidNonWhitelisted: true }),
   )
-  async create(
-    @Body() createUserDto: CreateUserDTO,
-    @Res() response: Response,
-  ) {
-    const { token, ...newUser } = await this.authService.create(createUserDto);
-    response.cookie(COOKIE_ACCESS, token, {
-      httpOnly: true,
-      sameSite: 'strict',
-      expires: new Date(Date.now() + 24 * 60 * 60 * 1000),
-    });
-    response.send(newUser);
+  create(@Body() createUserDto: CreateUserDTO) {
+    return this.authService.create(createUserDto);
   }
 
   @Get()
